@@ -1,15 +1,17 @@
 import React from 'react'
+import Link from 'next/link'
 import { prisma } from '@/lib/db'
 import BlogPost from '@/components/BlogPost'
 import { notFound } from 'next/navigation'
 
 interface BlogPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default async function BlogPage({ params }: BlogPageProps) {
+  const { slug } = await params
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
   })
 
   if (!post) {
@@ -24,7 +26,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         right: '20px',
         zIndex: 1000,
       }}>
-        <a
+        <Link
           href="/"
           style={{
             padding: '10px 20px',
@@ -39,7 +41,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
           }}
         >
           返回首页
-        </a>
+        </Link>
       </nav>
       
       <BlogPost 

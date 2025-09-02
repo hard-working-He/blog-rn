@@ -3,8 +3,18 @@
 import React, { useState } from 'react'
 import { parseMarkdown } from '@/lib/markdown'
 
+interface Post {
+  id: string
+  title: string
+  content: string
+  slug: string
+  createdAt: string
+  updatedAt: string
+  published: boolean
+}
+
 interface BlogEditorProps {
-  onSave?: (post: any) => void
+  onSave?: (post: Post) => void
 }
 
 export default function BlogEditor({ onSave }: BlogEditorProps) {
